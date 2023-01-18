@@ -1,0 +1,135 @@
+﻿<Page
+    x:Class="GraphEditorWPF.ViewModels.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GraphEditorWPF.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="AppTitleBar"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                Background="Transparent"
+                Height="48"
+                Grid.Row="0"
+                Canvas.ZIndex="1000"
+                Margin="0,0,0,0">
+        </Border>
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Left"
+                    Canvas.ZIndex="1005"
+                    Margin="16,-8,0,0"
+                    Grid.Row="0">
+
+            <Image x:Name="AppFontIcon"
+                   Margin="4,0,12,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Stretch="Uniform"
+                   Source="/Assets/Logo/Logo.scale-100.png"
+                   Height="16"
+                   Width="16"/>
+
+            <TextBlock x:Name="AppTitle"
+                       Text="Graph Editor (preview)"
+                       VerticalAlignment="Center"
+                       Margin="0,0,16,0"
+                       FontSize="14"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+
+            <muxc:MenuBar Margin="0,2,0,0">
+                <muxc:MenuBarItem Title="File">
+                    <MenuFlyoutItem Text="New" Click="NewClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="N"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Open" Click="OpenClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="O"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Save" Click="SaveClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Save as..." Click="SaveAsClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control,Shift" Key="S"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Exit" Click="CloseWindowClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </muxc:MenuBarItem>
+
+                <muxc:MenuBarItem Title="Edit">
+                    <MenuFlyoutItem Text="Undo" Click="ButtonUndoClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Redo" Click="ButtonRedoClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                            <KeyboardAccelerator Modifiers="Control,Shift" Key="Z"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Copy" Visibility="Collapsed">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Paste" Visibility="Collapsed">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="V"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </muxc:MenuBarItem>
+
+                <muxc:MenuBarItem Title="Tool">
+                    <MenuFlyoutItem Text="Node" Click="AddNodeClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Number1"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Edge" Click="AddEdgeClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Number2"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Edge oriented" Click="AddOrientedEdgeClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Number3"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Erase" Click="EraseClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Number4"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Default" Click="DefaultClicked">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Escape"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </muxc:MenuBarItem>
+            </muxc:MenuBar>
+        </StackPanel>
+
+        <Frame x:Name="MainFrame" Grid.Row="1" Canvas.ZIndex="0" />
+    </Grid>
+</Page>

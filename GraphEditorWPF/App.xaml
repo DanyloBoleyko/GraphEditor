@@ -1,0 +1,58 @@
+﻿<Application
+    x:Class="GraphEditorWPF.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GraphEditorWPF"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="Styles/AppBarButtonStyle.xaml" />
+                <ResourceDictionary Source="Styles/ZoomButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <!-- light -->
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="CanvasColor" Color="{ThemeResource SystemAltLowColor}"/>
+
+                    <SolidColorBrush x:Key="NodeColor" Color="{ThemeResource SystemAccentColor}"/>
+                    <SolidColorBrush x:Key="NodeColorSelected" Color="{ThemeResource SystemBaseHighColor}"/>
+                    <SolidColorBrush x:Key="NodeBorderColor" Color="{ThemeResource SystemAccentColor}"/>
+                    <SolidColorBrush x:Key="NodeBorderColorSelected" Color="{ThemeResource SystemAccentColor}"/>
+                    <SolidColorBrush x:Key="NodeLabelColor" Color="{ThemeResource SystemColorHighlightTextColor}"/>
+                    <SolidColorBrush x:Key="NodeLabelColorSelected" Color="{ThemeResource SystemColorHighlightTextColor}"/>
+                    
+                    <SolidColorBrush x:Key="EdgeColor" Color="{ThemeResource SystemAccentColorLight2}"/>
+
+                    <SolidColorBrush x:Key="GridColor" Color="{ThemeResource SystemBaseLowColor}"/>
+                </ResourceDictionary>
+                <!-- dark -->
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="CanvasColor" Color="{ThemeResource SystemAltLowColor}"/>
+                    
+                    <SolidColorBrush x:Key="NodeColor" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <SolidColorBrush x:Key="NodeColorSelected" Color="{ThemeResource SystemBaseHighColor}"/>
+                    <SolidColorBrush x:Key="NodeBorderColor" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <SolidColorBrush x:Key="NodeBorderColorSelected" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <SolidColorBrush x:Key="NodeLabelColor" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                    <SolidColorBrush x:Key="NodeLabelColorSelected" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                    
+                    <SolidColorBrush x:Key="EdgeColor" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    
+                    <SolidColorBrush x:Key="GridColor" Color="{ThemeResource SystemBaseLowColor}"/>
+                </ResourceDictionary>
+                <!-- high contrast -->
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="CanvasColor" Color="{ThemeResource SystemBaseHighColor}"/>
+                    
+                    <SolidColorBrush x:Key="NodeColor" Color="{ThemeResource SystemColorWindowColor}"/>
+                    <SolidColorBrush x:Key="NodeLabelColor" Color="{ThemeResource SystemAccentColorDark3}"/>
+                    
+                    <SolidColorBrush x:Key="EdgeColor" Color="{ThemeResource SystemColorWindowColor}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
