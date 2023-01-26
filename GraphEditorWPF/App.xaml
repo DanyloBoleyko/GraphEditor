@@ -25,6 +25,7 @@
                     <SolidColorBrush x:Key="NodeLabelColorSelected" Color="{ThemeResource SystemColorHighlightTextColor}"/>
                     
                     <SolidColorBrush x:Key="EdgeColor" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <SolidColorBrush x:Key="EdgeLabelColor" Color="{ThemeResource SystemBaseHighColor}"/>
 
                     <SolidColorBrush x:Key="GridColor" Color="{ThemeResource SystemBaseLowColor}"/>
                 </ResourceDictionary>
@@ -40,6 +41,7 @@
                     <SolidColorBrush x:Key="NodeLabelColorSelected" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     
                     <SolidColorBrush x:Key="EdgeColor" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="EdgeLabelColor" Color="{ThemeResource SystemBaseHighColor}"/>
                     
                     <SolidColorBrush x:Key="GridColor" Color="{ThemeResource SystemBaseLowColor}"/>
                 </ResourceDictionary>

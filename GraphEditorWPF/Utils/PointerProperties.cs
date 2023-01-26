@@ -13,6 +13,8 @@ namespace GraphEditorWPF.Utils
         private bool _leftButton = false;
         private bool _middleButton = false;
         private bool _rightButton = false;
+        private bool _shiftPressed = false;
+        private bool _ctrlPressed = false;
 
         public PointerProperties(bool leftButton = false, bool middleButton = false, bool rightButton = false)
         {
@@ -44,6 +46,18 @@ namespace GraphEditorWPF.Utils
         { 
             get { return _rightButton; }
             set { _rightButton = value; }
+        }
+
+        public bool ShiftRised 
+        { 
+            get { return _shiftPressed; }
+            set { _shiftPressed = value; }
+        }
+
+        public bool CtrlRised 
+        { 
+            get { return _ctrlPressed; }
+            set { _ctrlPressed = value; }
         }
     }
 }

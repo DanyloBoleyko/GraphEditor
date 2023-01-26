@@ -42,5 +42,36 @@ namespace GraphEditorWPF.Models
             Nodes = graph.Nodes;
             Edges = graph.Edges;
         }
+
+        private void DFSRecursion(ref string output, Node node, Dictionary<string, bool> visited)
+        {
+            visited[node.Key] = true;
+
+            output += node.Label;
+            output += ", ";
+
+            List<Node> siblings = new List<Node>();
+            foreach (var e in node.Edges)
+            {
+                siblings.Add(e.EndNode);
+            }
+
+            foreach (var n in siblings)
+            {
+                bool val;
+                if (!visited.TryGetValue(n.Key, out val))
+                    DFSRecursion(ref output, n, visited);
+            }
+        }
+
+        public string DFS(Node start)
+        {
+            var visited = new Dictionary<string, bool>();
+            var output = "";
+
+            DFSRecursion(ref output, start, visited);
+
+            return output;
+        }
     }
 }

@@ -8,6 +8,7 @@ using GraphEditorWPF.Models.NodeModels;
 using GraphEditorWPF.Types;
 using GraphEditorWPF.ViewModels;
 using GraphEditorWPF.ViewModels.Dialogs;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,6 +28,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Path = Windows.UI.Xaml.Shapes.Path;
 
 namespace GraphEditorWPF.ViewModels
 {
@@ -39,6 +41,8 @@ namespace GraphEditorWPF.ViewModels
         private HistoryController _historyController;
         private Mode _currentMode = Mode.Normal;
         private Ellipse _nodeShadow;
+
+        private bool _addingEdge = false;
 
         public EditorView()
         {
@@ -174,25 +178,30 @@ namespace GraphEditorWPF.ViewModels
                 // Edge context menu items
                 else if (source.GetType() == typeof(Windows.UI.Xaml.Shapes.Path))
                 {
-                    var unlinkStart = new MenuFlyoutItem();
-                    unlinkStart.Text = "Unlink start";
-                    unlinkStart.Click += ContextLinkTo;
+                    //var unlinkStart = new MenuFlyoutItem();
+                    //unlinkStart.Text = "Unlink start";
+                    //unlinkStart.Click += ContextLinkTo;
 
-                    var unlinkEnd = new MenuFlyoutItem();
-                    unlinkEnd.Text = "Unlink end";
-                    unlinkEnd.Click += ContextLinkTo;
+                    //var unlinkEnd = new MenuFlyoutItem();
+                    //unlinkEnd.Text = "Unlink end";
+                    //unlinkEnd.Click += ContextLinkTo;
 
                     var reverseDirection = new MenuFlyoutItem();
                     reverseDirection.Text = "Reverse direction";
                     reverseDirection.Click += ContextReverseEdge;
 
+                    var setWeight = new MenuFlyoutItem();
+                    setWeight.Text = "Weight";
+                    setWeight.Click += ContextWeightEdge;
+
                     var removeEdge = new MenuFlyoutItem();
                     removeEdge.Text = "Remove edge";
                     removeEdge.Click += ContextRemoveEdge;
 
-                    ContextMenu.Items.Add(unlinkStart);
-                    ContextMenu.Items.Add(unlinkEnd);
+                    //ContextMenu.Items.Add(unlinkStart);
+                    //ContextMenu.Items.Add(unlinkEnd);
                     ContextMenu.Items.Add(reverseDirection);
+                    ContextMenu.Items.Add(setWeight);
                     ContextMenu.Items.Add(removeEdge);
                 }
             }
@@ -210,6 +219,11 @@ namespace GraphEditorWPF.ViewModels
                 if (_currentMode == Mode.AddingNode && source == MainCanvas)
                 {
                     AddNode(x, y);
+                }
+
+                if (_currentMode == Mode.AddingOrientedEdge && source != MainCanvas && !_addingEdge)
+                {
+                    StartEdge(source as UIElement, EdgeType.Directional);
                 }
             }
         }
@@ -342,6 +356,44 @@ namespace GraphEditorWPF.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private async void ContextWeightEdge(object sender, RoutedEventArgs e)
+        {
+            if (_contextParams.Source.GetType() == typeof(Path))
+            {
+                var element = _canvas.Find(_contextParams.Source as UIElement);
+
+                if (element == null) return;
+                if (element.GetType() != typeof(EdgeElement)) return;
+
+                var edgeElement = (EdgeElement) element;
+
+                ContentDialog dialog = new ContentDialog();
+
+                dialog.Title = "Set edge weight";
+                dialog.PrimaryButtonText = "Save";
+                dialog.CloseButtonText = "Cancel";
+                dialog.DefaultButton = ContentDialogButton.Primary;
+                dialog.Content = new WeightDialog();
+
+                var content = (WeightDialog) dialog.Content;
+                content.EdgeWeight = edgeElement.Edge.Weight;
+
+                var result = await dialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    edgeElement.Edge.Weight = content.EdgeWeight;
+                    edgeElement.Label.Text = content.EdgeWeight.ToString();
+                }
+                content.EdgeWeight = 0;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContextRemoveNode(object sender, RoutedEventArgs e)
         {
             if (_contextParams.Source.GetType() == typeof(Ellipse))
@@ -356,7 +408,7 @@ namespace GraphEditorWPF.ViewModels
         private void ContextLinkTo(object sender, RoutedEventArgs e)
         {
             if (_contextParams.Source.GetType() == typeof(Ellipse))
-                StartEdge(_contextParams.Source as UIElement);
+                StartEdge(_contextParams.Source as UIElement, EdgeType.Directional);
         }
 
         /// <summary>
@@ -450,12 +502,16 @@ namespace GraphEditorWPF.ViewModels
         /// 
         /// </summary>
         /// <param name="element"></param>
-        private void StartEdge(UIElement element)
+        private void StartEdge(UIElement element, EdgeType type = EdgeType.Directional)
         {
-            var nodeElement = (NodeElement) _canvas.Find(element);
+            var found = _canvas.Find(element);
+            if (found.GetType() != typeof(NodeElement)) return;
+
+            var nodeElement = (NodeElement) found;
             if (nodeElement == null) return;
 
             var edgeElement = new EdgeElement(_canvas);
+            edgeElement.Type = type;
             edgeElement.Removed += EdgeRemoved;
 
             edgeElement.Add(nodeElement);
@@ -466,6 +522,8 @@ namespace GraphEditorWPF.ViewModels
 
             _canvas.Pressed += EndEdge;
             _canvas.Canceled += RemoveEdge;
+
+            _addingEdge = true;
         }
 
         /// <summary>
@@ -481,7 +539,11 @@ namespace GraphEditorWPF.ViewModels
             var edgeElement = (EdgeElement) _selectedElement;
 
             var canvasElement = _canvas.Find(e.Source);
-            if (canvasElement == null || canvasElement.GetType() != typeof(NodeElement)) return;
+            if (canvasElement == null || canvasElement.GetType() != typeof(NodeElement))
+            {
+                _addingEdge = false;
+                return;
+            }
 
             var nodeElement = (NodeElement) canvasElement;
             edgeElement.LinkEndTo(nodeElement);
@@ -497,11 +559,45 @@ namespace GraphEditorWPF.ViewModels
             if (collection.Count() > 1)
             {
                 edgeElement.Remove();
+                _addingEdge = false;
                 return;
+            }
+
+            collection = _canvas.Children.Where((elem) => {
+                if (elem.GetType() != typeof(EdgeElement))
+                    return false;
+
+                EdgeElement edge = (EdgeElement)elem;
+                return edge.From == edgeElement.From && edge.To == edgeElement.To || 
+                    edge.From == edgeElement.To && edge.To == edgeElement.From;
+            });
+
+            if (collection.Count() > 1)
+            {
+                var firstElem = ((EdgeElement)collection.First());
+                edgeElement.Edge.Weight = firstElem.Edge.Weight;
+                firstElem.Edge.WeightChanged += (object s, double weight) =>
+                {
+                    edgeElement.Edge.Weight = weight;
+                    edgeElement.Removed += (object _, EdgeElementArgs args) =>
+                    {
+                        firstElem.Remove();
+                    };
+                };
+                edgeElement.Edge.WeightChanged += (object s, double weight) =>
+                {
+                    firstElem.Edge.Weight = weight;
+                    firstElem.Removed += (object _, EdgeElementArgs args) =>
+                    {
+                        edgeElement.Remove();
+                    };
+                };
             }
 
             var command = new AddEdgeCommand(edgeElement, edgeElement.From, edgeElement.To, _graph);
             _historyController.Execute(command);
+
+            _addingEdge = false;
         }
 
         /// <summary>
@@ -594,9 +690,9 @@ namespace GraphEditorWPF.ViewModels
                     AddNodeButton.IsChecked = true;
                     return;
 
-                case Mode.AddingEdge:
-                    AddEdgeButton.IsChecked = true;
-                    return;
+                //case Mode.AddingEdge:
+                //    AddEdgeButton.IsChecked = true;
+                //    return;
 
                 case Mode.AddingOrientedEdge:
                     AddOrientedEdgeButton.IsChecked = true;
@@ -712,7 +808,7 @@ namespace GraphEditorWPF.ViewModels
         {
             EraseButton.IsChecked = false;
             AddNodeButton.IsChecked = false;
-            AddEdgeButton.IsChecked = false;
+            //AddEdgeButton.IsChecked = false;
             AddOrientedEdgeButton.IsChecked = false;
         }
 
@@ -732,6 +828,30 @@ namespace GraphEditorWPF.ViewModels
             ContentDialog dialog = new ContentDialog();
 
             dialog.Title = "Info";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new InfoDialog();
+
+            var content = (InfoDialog) dialog.Content;
+            content.InfoText = text;
+
+            var result = await dialog.ShowAsync();
+        }
+
+        private async void DfsClicked(object sender, RoutedEventArgs e)
+        {
+            if (_canvas.SelectedElements.Count < 1) return;
+
+            var starterElement = _canvas.SelectedElements.First();
+
+            if (starterElement.GetType() != typeof(NodeElement)) return;
+
+            var nodeElement = (NodeElement) starterElement;
+            var text = _graph.DFS(nodeElement.Node);
+
+            ContentDialog dialog = new ContentDialog();
+
+            dialog.Title = "DFS";
             dialog.PrimaryButtonText = "Ok";
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = new InfoDialog();

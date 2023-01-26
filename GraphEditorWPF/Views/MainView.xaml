@@ -106,12 +106,12 @@
                             <KeyboardAccelerator Modifiers="Control" Key="Number1"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Edge" Click="AddEdgeClicked">
+                    <!--<MenuFlyoutItem Text="Edge" Click="AddEdgeClicked">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Number2"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Edge oriented" Click="AddOrientedEdgeClicked">
+                    </MenuFlyoutItem>-->
+                    <MenuFlyoutItem Text="Edge" Click="AddOrientedEdgeClicked">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Number3"/>
                         </MenuFlyoutItem.KeyboardAccelerators>

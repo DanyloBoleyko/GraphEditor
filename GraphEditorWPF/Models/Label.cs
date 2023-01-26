@@ -131,7 +131,38 @@ namespace GraphEditorWPF.Models
 
         public void LinkTo(EdgeElement edgeElement)
         {
+            _linkedElement = edgeElement;
+            _element.Name = "Label_" + edgeElement.Edge.Key;
+            _element.FontWeight = FontWeights.Bold;
+            _element.Foreground = (SolidColorBrush)Application.Current.Resources["EdgeLabelColor"];
 
+            _element.SizeChanged += (object sender, SizeChangedEventArgs e) =>
+            {
+                MoveTo(edgeElement.LabelPosition);
+            };
+
+            _element.Loaded += (object sender, RoutedEventArgs e) =>
+            {
+                _element = sender as TextBlock;
+                MoveTo(edgeElement.LabelPosition);
+            };
+
+            edgeElement.Canvas.Children.Add(_element);
+
+            edgeElement.Edge.WeightChanged += (object s, double weight) =>
+            {
+                _element.Text = weight.ToString();
+            };
+
+            edgeElement.Moved += (object sender, EdgeElementArgs e) =>
+            {
+                MoveTo(edgeElement.LabelPosition);
+            };
+
+            edgeElement.Removed += (object sender, EdgeElementArgs e) =>
+            {
+                edgeElement.Canvas.Children.Remove(_element);
+            };
         }
 
         private void Init()

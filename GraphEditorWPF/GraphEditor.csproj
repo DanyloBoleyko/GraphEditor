@@ -149,6 +149,7 @@
     <Compile Include="Types\Range.cs" />
     <Compile Include="Utils\Keyable.cs" />
     <Compile Include="Utils\PointerProperties.cs" />
+    <Compile Include="ViewModels\Dialogs\WeightDialogModel.cs" />
     <Compile Include="ViewModels\Dialogs\SaveDialog.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogModel.cs" />
     <Compile Include="ViewModels\Dialogs\RenameDialogModel.cs" />
@@ -202,6 +203,10 @@
     <Page Include="Styles\ZoomButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\WeightDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\SaveDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

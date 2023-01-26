@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using GraphEditorWPF.EventArguments;
 using GraphEditorWPF.Models.NodeModels;
 using GraphEditorWPF.Types;
 using GraphEditorWPF.Utils;
@@ -22,6 +23,8 @@ namespace GraphEditorWPF.Models.EdgeModels
         private string _startNodeKey;
         private string _endNodeKey;
 
+        public event EventHandler<double> WeightChanged;
+
         public Edge(Node start = null, Node end = null, double width = 0.5)
         {
             _width = width;
@@ -34,6 +37,20 @@ namespace GraphEditorWPF.Models.EdgeModels
         {
             get { return _width; }
             set { _width = value; }
+        }
+
+        public double Weight
+        {
+            get { return _value; }
+            set {
+                var prev = _value;
+                _value = value;
+
+                if (WeightChanged != null && prev != _value)
+                {
+                    WeightChanged(this, _value);
+                }
+            }
         }
 
         [JsonProperty("params")]
@@ -96,7 +113,7 @@ namespace GraphEditorWPF.Models.EdgeModels
 
             var result = StartNode.Label;
 
-            result += string.Format(" - {1} -> ", _value, _width);
+            result += string.Format(" - {0} -> ", _value, _width);
 
             result += EndNode.Label;
             result += ";";

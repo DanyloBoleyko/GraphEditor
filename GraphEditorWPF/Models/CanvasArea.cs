@@ -29,23 +29,6 @@ using Point = Windows.Foundation.Point;
 
 namespace GraphEditorWPF.Models
 {
-    // click event arguments
-    public class PointerClickEventArgs : EventArgs
-    {
-        public PointerRoutedEventArgs Args;
-        public bool IsLeftButtonClicked;
-        public bool IsRightButtonClicked;
-        public bool IsMiddleButtonClicked;
-    }
-
-    // line draw arguments
-    public class LineArgs : EventArgs
-    {
-        public Coordinates From;
-        public Coordinates To;
-        public Line Element;
-    }
-
     public class CanvasArea
     {
         private Canvas _canvas;
@@ -90,6 +73,11 @@ namespace GraphEditorWPF.Models
         public List<Rectangle> GridLines
         {
             get { return _gridLines; }
+        }
+
+        public List<CanvasElement> SelectedElements
+        {
+            get { return _selectedElements; }
         }
 
         /// <summary>
@@ -279,6 +267,7 @@ namespace GraphEditorWPF.Models
         /// <param name="e"></param>
         private void PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            var modifiers = e.KeyModifiers;
             var pointer = e.GetCurrentPoint(_canvas);
             var source = e.OriginalSource;
             var properties = pointer.Properties;
@@ -307,12 +296,23 @@ namespace GraphEditorWPF.Models
 
             _clickTracked = true;
 
-            _dragStarted = true;
-            _dragStartPosition = (Coordinates) pointer.Position;
-
-            _dragElements.Clear();
-
             var element = Find(source as UIElement);
+
+            if (pointer.Properties.IsLeftButtonPressed)
+            {
+                if (modifiers == Windows.System.VirtualKeyModifiers.Shift || modifiers == Windows.System.VirtualKeyModifiers.Control)
+                {
+                    SelectionAdd(element);
+                }
+                else
+                {
+                    SelectionSet(element);
+                }
+            }
+
+            _dragStarted = true;
+            _dragStartPosition = (Coordinates)pointer.Position;
+            _dragElements.Clear();
 
             if (pointer.Properties.IsRightButtonPressed)
             {
@@ -323,15 +323,11 @@ namespace GraphEditorWPF.Models
             }
             else if (pointer.Properties.IsLeftButtonPressed && AllowElementMove)
             {
-                if (element != null && element.GetType() == typeof(NodeElement))
+                foreach (var child in _selectedElements)
                 {
-                    _dragElements.Add(element.Element);
+                    if (child.GetType() == typeof(NodeElement))
+                        _dragElements.Add(child.Element);
                 }
-            }
-
-            if (pointer.Properties.IsLeftButtonPressed)
-            {
-                SelectionChange(element);
             }
 
             //SelectionRectangleInit((Coordinates) pointer.Position);
@@ -413,6 +409,7 @@ namespace GraphEditorWPF.Models
         /// <param name="e"></param>
         private void PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            var modifiers = e.KeyModifiers;
             var pointer = e.GetCurrentPoint(_canvas);
             var element = Find(e.OriginalSource as UIElement);
 
@@ -427,7 +424,15 @@ namespace GraphEditorWPF.Models
 
                 if (_args.Properties.RightButtonRised || _args.Properties.LeftButtonRised)
                 {
-                    SelectionChange(element);
+                    if (modifiers == Windows.System.VirtualKeyModifiers.Shift || modifiers == Windows.System.VirtualKeyModifiers.Control)
+                    {
+                        SelectionAdd(element);
+                    }
+                    else
+                    {
+                        SelectionClear();
+                        SelectionSet(element);
+                    }
                 }
             }
 
@@ -532,40 +537,43 @@ namespace GraphEditorWPF.Models
         private void DrawLineEnd(object sender, PointerRoutedEventArgs e)
         {
             var source = e.OriginalSource;
-            if (source.GetType() == typeof(Ellipse) || source.GetType() == typeof(TextBlock))
+            if (_capturedLine != null)
             {
-                var element = (UIElement) source;
-
-                var found = Find(element);
-                double x = 0;
-                double y = 0;
-
-                if (found != null)
+                if (source.GetType() == typeof(Ellipse) || source.GetType() == typeof(TextBlock))
                 {
-                    element = found.Element;
+                    var element = (UIElement)source;
 
-                    x = Canvas.GetLeft(element) + (element.ActualSize.X / 2);
-                    y = Canvas.GetTop(element) + (element.ActualSize.Y / 2);
+                    var found = Find(element);
+                    double x = 0;
+                    double y = 0;
 
-                    (_capturedLine as EdgeElement).MoveEndTo(new Coordinates(x, y));
+                    if (found != null)
+                    {
+                        element = found.Element;
+
+                        x = Canvas.GetLeft(element) + (element.ActualSize.X / 2);
+                        y = Canvas.GetTop(element) + (element.ActualSize.Y / 2);
+
+                        (_capturedLine as EdgeElement).MoveEndTo(new Coordinates(x, y));
+                    }
+
+                    if (Released != null)
+                    {
+                        _args.Position = new Coordinates(x, y);
+                        _args.Source = (UIElement)source;
+
+                        Released(this, _args);
+                    }
                 }
-
-                if (Released != null) 
+                else
                 {
-                    _args.Position = new Coordinates(x, y);
-                    _args.Source = (UIElement) source;
+                    var index = _canvas.Children.IndexOf(_capturedLine.Element);
 
-                    Released(this, _args);
+                    if (index >= 0)
+                        _canvas.Children.RemoveAt(index);
                 }
+                _capturedLine = null;
             }
-            else
-            {
-                var index = _canvas.Children.IndexOf(_capturedLine.Element);
-
-                if (index >= 0)
-                    _canvas.Children.RemoveAt(index);
-            }
-            _capturedLine = null;
             _canvas.PointerMoved -= DrawLineMove;
             _canvas.PointerReleased -= DrawLineEnd;
             //_canvas.PointerCanceled -= DrawLineEnd;
@@ -638,11 +646,45 @@ namespace GraphEditorWPF.Models
             //};
         }
 
-        private void SelectionChange(CanvasElement element)
+        private void SelectionClear()
         {
             var list = new List<CanvasElement>();
-            list.Add(element);
             SelectionChange(list);
+        }
+
+        private void SelectionSet(CanvasElement element)
+        {
+            var list = new List<CanvasElement>();
+            if (!list.Contains(element))
+            {
+                list.Add(element);
+            }
+            SelectionChange(list);
+        }
+
+        private void SelectionAdd(CanvasElement element)
+        {
+            var list = _selectedElements.Select(elem => elem).ToList();
+            if (list.Contains(element))
+            {
+                SelectionRemove(element);
+                SelectionChange(list);
+            }
+            else
+            {
+                list.Add(element);
+                SelectionChange(list);
+            }
+        }
+
+        private void SelectionRemove(CanvasElement element)
+        {
+            var list = _selectedElements.Select(elem => elem).ToList();
+            if (list.Contains(element))
+            {
+                list.Remove(element);
+                SelectionChange(list);
+            }
         }
 
         private void SelectionChange(List<CanvasElement> elements)
@@ -658,7 +700,7 @@ namespace GraphEditorWPF.Models
 
             foreach (var elem in elements.Where(e => e != null && e?.GetType() == typeof(NodeElement)))
             {
-                _selectedElements.Add(elem);
+                 _selectedElements.Add(elem);
             }
 
             foreach (var elem in _selectedElements)

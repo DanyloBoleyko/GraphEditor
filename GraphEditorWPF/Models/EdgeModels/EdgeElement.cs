@@ -56,6 +56,7 @@ namespace GraphEditorWPF.Models.EdgeModels
             get { return _type; }
             set { 
                 _type = value;
+                if (_fromNode == null || _toNode == null) return;
                 RedrawArrow(_fromNode.Center, _toNode.Center);
             }
         }
@@ -197,6 +198,16 @@ namespace GraphEditorWPF.Models.EdgeModels
 
             RedrawArrow(coords, _toNode.Center);
 
+            if (Moved != null)
+            {
+                Moved(this, new EdgeElementArgs
+                {
+                    Source = _toNode.Element,
+                    Properties = null,
+                    Position = _toNode.Center
+                });
+            }
+
             //Line element = (Line) _element;
             //element.X1 = coords.X;
             //element.Y1 = coords.Y;
@@ -220,6 +231,16 @@ namespace GraphEditorWPF.Models.EdgeModels
             if (_fromNode == null) return;
 
             RedrawArrow(_fromNode.Center, coords);
+
+            if (Moved != null)
+            {
+                Moved(this, new EdgeElementArgs
+                {
+                    Source = _fromNode.Element,
+                    Properties = null,
+                    Position = _fromNode.Center
+                });
+            }
         }
 
         /// <summary>
@@ -262,6 +283,12 @@ namespace GraphEditorWPF.Models.EdgeModels
 
             From.Moved += StartMoved;
             To.Moved += EndMoved;
+
+            if (From != To)
+            {
+                _label.Text = _edge.Weight.ToString();
+                _label.LinkTo(this);
+            }
         }
 
         /// <summary>
@@ -272,11 +299,16 @@ namespace GraphEditorWPF.Models.EdgeModels
             _canvas.Canvas.Children.Remove(_element);
             _canvas.Children.Remove(this);
 
-            From.Moved -= StartMoved;
-            To.Moved -= EndMoved;
-
-            From.LinkedEdges.Remove(this);
-            To.LinkedEdges.Remove(this);
+            if (From != null)
+            {
+                From.Moved -= StartMoved;
+                From.LinkedEdges.Remove(this);
+            }
+            if (To != null)
+            {
+                To.Moved -= EndMoved;
+                To.LinkedEdges.Remove(this);
+            }            
 
             if (Removed != null)
             {
@@ -484,6 +516,20 @@ namespace GraphEditorWPF.Models.EdgeModels
             connectorGeometry.EndPoint = p2;
             lineGroup.Children.Add(connectorGeometry);
             return lineGroup;
+        }
+
+        public Coordinates LabelPosition
+        {
+            get
+            {
+                var p1 = _fromNode.Center;
+                var p2 = _toNode?.Center ?? _fromNode.Center;
+
+                return new Coordinates((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
+
+                double theta = Math.Atan2((p2.Y - p1.Y), (p2.X - p1.X)) * 180 / Math.PI;
+                double distance = Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2));
+            }
         }
     }
 }
