@@ -149,6 +149,7 @@
     <Compile Include="Types\Range.cs" />
     <Compile Include="Utils\Keyable.cs" />
     <Compile Include="Utils\PointerProperties.cs" />
+    <Compile Include="Utils\PriorityQueue.cs" />
     <Compile Include="ViewModels\Dialogs\WeightDialogModel.cs" />
     <Compile Include="ViewModels\Dialogs\SaveDialog.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogModel.cs" />

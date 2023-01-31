@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GraphEditorWPF.App" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQAAIAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.AddEdgeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggAAAAAAACQAAABAAAQAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\AddEdgeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.AddNodeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgBAAQAAAACQAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\AddNodeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.MoveNodeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAABAAAAAQAAAAAAAQAAgAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Commands\MoveNodeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.RemoveEdgeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggAAAAAAACQAAABAAAQAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\RemoveEdgeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.RemoveNodeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgBAAQAAAACQAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\RemoveNodeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Commands.ReverseEdgeCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAQAAABAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\ReverseEdgeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.EventArguments.CanvasArgs" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAgAAAAAAAAAAAAAAAAAABAAAACAAA=</HashCode>
+      <FileName>EventArguments\CanvasArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.EventArguments.CanvasElementArgs" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventArguments\CanvasElementArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.EventArguments.NodeElementArguments.EdgeElementArgs" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAgAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>EventArguments\EdgeElementArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.EventArguments.NodeElementArguments.NodeElementArgs" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAgAAAAAAAAAAAAAAAAAABAAAACAAA=</HashCode>
+      <FileName>EventArguments\NodeElementArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.CanvasArea" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACFAAECGJCBBAITpsBIEISAHAARMEGEAAFBEwAREASA=</HashCode>
+      <FileName>Models\CanvasArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.CanvasElement" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAAAAAAAFAAQEIAAABoAAAAAAAAIAAEAAAACQCAAIAA=</HashCode>
+      <FileName>Models\CanvasElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.Graph" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAggBAAAAAAACAAAQBBAAAAAAAAQCAAIAAAAAAAAAI=</HashCode>
+      <FileName>Models\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.HistoryController" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAEBAQAAAAAAAABAAAAAgAAIAAAAAAACAA=</HashCode>
+      <FileName>Models\HistoryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.Label" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAABAAEAAAAAAgAAAAAAgAIAAAAAAACCCAAAAA=</HashCode>
+      <FileName>Models\Label.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.NodeElement" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICIACBAAAAAAAECQAAAABEAgAgEIACEAAAAgAAEsIAA=</HashCode>
+      <FileName>Models\NodeModels\NodeElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.Context.ContextParams" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQkAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Context\ContextParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.EdgeModels.Edge" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAICAQCAABCGAAACAEgAADAAAAAAAAAgAAIAAAA=</HashCode>
+      <FileName>Models\EdgeModels\Edge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.EdgeModels.EdgeElement" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiKAAiAEAQgEA0QAAIBAhEAgEAAKBCEAAQASAAIEIAA=</HashCode>
+      <FileName>Models\EdgeModels\EdgeElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.EdgeModels.EdgeParams" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAgAAAgAIAAAAAAAAACAQAAA=</HashCode>
+      <FileName>Models\EdgeModels\EdgeParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.NodeModels.Node" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAIAEAAAAAAEABBgAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Models\NodeModels\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Models.NodeModels.NodeParams" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAARAAAAAAgAAAAAEAAAgAIAAACCAAQCAAAYAA=</HashCode>
+      <FileName>Models\NodeModels\NodeParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Types.Coordinates" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAQAAAIAgAAAAAAAAAAAAIAAAAAAAAAAYiA=</HashCode>
+      <FileName>Types\Coordinates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Types.DelegateCommand&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\DelegateCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.Types.Range" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAEABAAAAAAAA=</HashCode>
+      <FileName>Types\Range.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Utils.Keyable" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAACAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Keyable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Utils.PointerProperties" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAAgAAgAAAAIAAAEAACAAAAAAEACAAAAAAAA=</HashCode>
+      <FileName>Utils\PointerProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.Utils.PriorityQueue&lt;T&gt;" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAgAAAAAEAAAAAAAAAAQAAAAABAAABAAAAABAAAA=</HashCode>
+      <FileName>Utils\PriorityQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.Dialogs.InfoDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Dialogs\InfoDialogModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.Dialogs.RenameDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Dialogs\RenameDialogModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.Dialogs.SaveDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>ViewModels\Dialogs\SaveDialog.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.Dialogs.WeightDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Dialogs\WeightDialogModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.EditorView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAFERiAtgKIIhqFBQAQCAAOJRAAeQCgAAABKQQhJIAM=</HashCode>
+      <FileName>ViewModels\EditorViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphEditorWPF.ViewModels.MainView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACUAIAAAgAAAgAAAAgEgAiAAAEAAQAwQAAQIgCQgAAA=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="GraphEditorWPF.Types.Interfaces.ICommand" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Interfaces\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="GraphEditorWPF.Types.EdgeType" Collapsed="true">
+    <Position X="5.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Types\EdgeType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GraphEditorWPF.Types.Mode" Collapsed="true">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAEAAAAAAAAAAAAAAAEAAAIAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Types\Modes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

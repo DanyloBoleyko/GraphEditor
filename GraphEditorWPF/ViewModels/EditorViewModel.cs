@@ -53,6 +53,7 @@ namespace GraphEditorWPF.ViewModels
             _canvas.Moved += CanvasMoved;
             _canvas.Translated += NodeMoved;
             _canvas.Zoomed += CanvasZoomed;
+            _canvas.SelectionChanged += CanvasSelectionChanged;
 
             _historyController = new HistoryController();
         }
@@ -246,6 +247,17 @@ namespace GraphEditorWPF.ViewModels
                     RemoveElement(source);
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CanvasSelectionChanged(object sender, List<CanvasElement> selectedElements)
+        {
+            DFSButton.IsEnabled = selectedElements.Count > 0;
+            AstarButton.IsEnabled = selectedElements.Count > 1;
         }
 
         /// <summary>
@@ -848,6 +860,33 @@ namespace GraphEditorWPF.ViewModels
 
             var nodeElement = (NodeElement) starterElement;
             var text = _graph.DFS(nodeElement.Node);
+
+            ContentDialog dialog = new ContentDialog();
+
+            dialog.Title = "DFS";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new InfoDialog();
+
+            var content = (InfoDialog) dialog.Content;
+            content.InfoText = text;
+
+            var result = await dialog.ShowAsync();
+        }
+
+        private async void AstarClicked(object sender, RoutedEventArgs e)
+        {
+            if (_canvas.SelectedElements.Count < 1) return;
+
+            var startElement = _canvas.SelectedElements.First();
+            if (startElement.GetType() != typeof(NodeElement)) return;
+            var startNodeElement = (NodeElement) startElement;
+
+            var endElement = _canvas.SelectedElements.Last();
+            if (endElement.GetType() != typeof(NodeElement)) return;
+            var endNodeElement = (NodeElement) endElement;
+
+            var text = _graph.Astar(startNodeElement.Node, endNodeElement.Node);
 
             ContentDialog dialog = new ContentDialog();
 

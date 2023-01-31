@@ -59,6 +59,7 @@ namespace GraphEditorWPF.Models
         public event EventHandler<CanvasArgs> Translated;
         public event EventHandler<CanvasArgs> Moved;
         public event EventHandler<CanvasArgs> Zoomed;
+        public event EventHandler<List<CanvasElement>> SelectionChanged;
         private CanvasArgs _args = null;
 
         /// <summary>
@@ -706,6 +707,11 @@ namespace GraphEditorWPF.Models
             foreach (var elem in _selectedElements)
             {
                 elem.IsSelected = true;
+            }
+
+            if (SelectionChanged != null)
+            {
+                SelectionChanged(this, SelectedElements);
             }
         }
 
