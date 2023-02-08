@@ -915,8 +915,8 @@ namespace GraphEditorWPF.ViewModels
                 var from = _canvas.Find(edge.StartNodeKey) as NodeElement;
                 var to = _canvas.Find(edge.EndNodeKey) as NodeElement;
 
-                edge.StartNode = from.Node;
-                edge.EndNode = to.Node;
+                edge.StartNode = from?.Node ?? null;
+                edge.EndNode = to?.Node ?? null;
 
                 var edgeElement = new EdgeElement(_canvas);
                 edgeElement.Edge = edge;
